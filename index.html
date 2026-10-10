@@ -193,6 +193,35 @@ input[type="date"].input::-webkit-calendar-picker-indicator{cursor:pointer;opaci
 .fp-splash-points span{border:1px solid rgba(125,194,255,.28);background:rgba(8,49,104,.5);backdrop-filter:blur(8px);padding:9px 12px;border-radius:13px;font-size:12px;font-weight:800;color:#e4f3ff}
 @media(max-width:650px){#fpSplash .fp-logo-shell{width:min(245px,65vw)}#fpSplash .fp-logo-shell:after{inset:-16px!important;border-width:5px!important}#fpSplash .fp-start-title{margin-top:32px}.fp-splash-points{gap:7px}.fp-splash-points span{font-size:11px;padding:7px 9px}}
 @media(prefers-reduced-motion:reduce){.fp-splash-glow,.fp-splash-points{animation:none!important}}
+
+/* Mobile tracking layout fix */
+@media (max-width: 650px) {
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  .track-band,.result{width:100%;max-width:100%;min-width:0;margin-inline:auto;box-sizing:border-box}
+  .track-band{display:flex;flex-direction:column;align-items:stretch;gap:14px;padding:18px 14px;text-align:center}
+  .track-band .map{font-size:48px;line-height:1.2}
+  .track-band .track-title h2{font-size:23px}
+  .track-band .track-title p{font-size:14px}
+  .track-band .track-fields{display:grid;grid-template-columns:minmax(0,1fr);width:100%;gap:10px}
+  .track-band .input-wrap,.track-band .input{width:100%;min-width:0;max-width:100%}
+  .track-band .input{height:54px;font-size:16px}
+  .track-band>.wide-btn{width:100%;height:55px;font-size:17px}
+  .result{padding:16px 12px;border-radius:16px;overflow:hidden}
+  .result h2,.result h3{overflow-wrap:anywhere}
+  .result .steps{display:flex;flex-direction:column;align-items:stretch;gap:0;margin-top:20px;padding:0 5px}
+  .result .step{display:flex;align-items:center;gap:14px;min-height:80px;text-align:right;padding:5px 0;position:relative;min-width:0}
+  .result .step .dot{flex:0 0 48px;width:48px;height:48px;font-size:21px;margin:0}
+  .result .step b{margin-top:0;font-size:14px;overflow-wrap:anywhere}
+  .result .step small{font-size:12px;overflow-wrap:anywhere}
+  .result .step:not(:last-child):after{content:"";position:absolute;right:23px;top:55px;width:4px;height:28px;z-index:0;background:#d3dbe6}
+  .result .step.done:not(:last-child):after{background:var(--green)}
+  .result .order-summary{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;padding:12px;margin-top:18px}
+  .result .order-summary>div{min-width:0;padding:10px 12px;border:1px solid #e3edf9;border-radius:10px;background:#fff;overflow-wrap:anywhere}
+  .result .order-summary p{overflow-wrap:anywhere;word-break:break-word}
+}
+
+/* Keep phone numbers in natural left-to-right order on Arabic mobile layouts */
+#trackPhone{direction:ltr!important;text-align:left!important;unicode-bidi:plaintext;font-variant-numeric:lining-nums; padding-left:16px;padding-right:45px;}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -237,7 +266,7 @@ input[type="date"].input::-webkit-calendar-picker-indicator{cursor:pointer;opaci
     <div class="service" onclick="pickService('سباكة وكشف تسربات')"><div class="sicon">🚰</div><b>سباكة وكشف تسربات</b><button class="mini-btn">اطلب الآن</button></div>
     <div class="service" onclick="pickService('كهرباء وتمديدات')"><div class="sicon">🔌</div><b>كهرباء وتمديدات</b><button class="mini-btn">اطلب الآن</button></div>
   </section>
-  <section class="track-band" id="track"><div class="map">🗺️</div><div class="track-title"><h2>تتبع طلبك بسهولة</h2><p>أدخل رقم الطلب ورقم الجوال لمتابعة حالة طلبك</p></div><div class="track-fields"><div class="input-wrap"><span class="ico">📞</span><input id="trackPhone" class="input" placeholder="05XXXXXXXX"></div><div class="input-wrap"><span class="ico">▣</span><input id="trackId" class="input" placeholder="مثال: 1001"></div></div><button class="btn btn-primary wide-btn" onclick="trackOrder()">تتبع الطلب 🔍</button></section>
+  <section class="track-band" id="track"><div class="map">🗺️</div><div class="track-title"><h2>تتبع طلبك بسهولة</h2><p>أدخل رقم الطلب ورقم الجوال لمتابعة حالة طلبك</p></div><div class="track-fields"><div class="input-wrap"><span class="ico">📞</span><input id="trackPhone" class="input" type="tel" inputmode="tel" dir="ltr" autocomplete="tel" placeholder="05XXXXXXXX"></div><div class="input-wrap"><span class="ico">▣</span><input id="trackId" class="input" placeholder="مثال: 1001"></div></div><button class="btn btn-primary wide-btn" onclick="trackOrder()">تتبع الطلب 🔍</button></section>
   <section class="result" id="resultBox"></section>
   <section class="benefits"><div class="benefit"><div class="bicon">🎧</div><div>دعم فني متاح<br>على مدار الساعة</div></div><div class="benefit"><div class="bicon">٪</div><div>أسعار تنافسية<br>وأفضل العروض</div></div><div class="benefit"><div class="bicon">☆</div><div>تقييمات عملائنا<br>تثق بنا</div></div><div class="benefit"><div class="bicon">👥</div><div>متابعة كاملة<br>للطلبات</div></div></section>
 </main>
