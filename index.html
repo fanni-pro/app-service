@@ -253,7 +253,10 @@ input[type="date"].input::-webkit-calendar-picker-indicator{cursor:pointer;opaci
     <button type="button" class="service-chip" data-service="صيانة الثلاجات" onclick="toggleService(this)"><span class="check">✓</span><span>صيانة الثلاجات</span></button>
     <button type="button" class="service-chip" data-service="سباكة وكشف تسربات" onclick="toggleService(this)"><span class="check">✓</span><span>سباكة وكشف تسربات</span></button>
     <button type="button" class="service-chip" data-service="كهرباء وتمديدات" onclick="toggleService(this)"><span class="check">✓</span><span>كهرباء وتمديدات</span></button>
-    <button type="button" class="service-chip" data-service="دهانات وديكورات" onclick="toggleService(this)"><span class="check">✓</span><span>دهانات وديكورات</span></button>
+
+    <button type="button" class="service-chip" data-service="صيانة الأفران" onclick="toggleService(this)"><span class="check">✓</span><span>صيانة الأفران</span></button>
+    <button type="button" class="service-chip" data-service="صيانة غسالات الأواني" onclick="toggleService(this)"><span class="check">✓</span><span>صيانة غسالات الأواني</span></button>
+    <button type="button" class="service-chip" data-service="صيانة المجففات" onclick="toggleService(this)"><span class="check">✓</span><span>صيانة المجففات</span></button>
   </div>
   <div id="selectedServicesList" class="service-selected-list"></div>
 </div><div class="input-wrap"><span class="ico">📅</span><input id="date" class="input" type="date" required readonly inputmode="none" onclick="openNativeCalendar(this)" onfocus="openNativeCalendar(this)" onkeydown="return false" onchange="validateFutureDate(this)"></div><div class="input-wrap"><span class="ico">📍</span><select id="city" class="select" required><option value="" disabled selected>اختر المدينة</option><option>أبها</option><option>خميس مشيط</option><option>أحد رفيدة</option><option>ظهران الجنوب</option><option>سراة عبيدة</option><option>النماص</option><option>تنومة</option><option>محايل عسير</option><option>رجال ألمع</option><option>بارق</option><option>المجاردة</option><option>بيشة</option><option>تثليث</option><option>بلقرن</option><option>طريب</option><option>الحرجة</option><option>جازان</option><option>صبيا</option><option>أبو عريش</option><option>صامطة</option><option>أحد المسارحة</option><option>بيش</option><option>الدرب</option><option>العارضة</option><option>فرسان</option><option>الدائر</option><option>فيفا</option><option>الريث</option><option>ضمد</option><option>الطوال</option><option>العيدابي</option><option>نجران</option><option>شرورة</option><option>حبونا</option><option>بدر الجنوب</option><option>يدمة</option><option>ثار</option><option>خباش</option><option>الباحة</option><option>بلجرشي</option><option>المندق</option><option>المخواة</option><option>قلوة</option><option>العقيق</option><option>القرى</option><option>غامد الزناد</option><option>بني حسن</option></select></div><button class="btn btn-primary wide-btn" onclick="openRequestModal()">إنشاء طلب ＋</button></div></div>
@@ -267,6 +270,9 @@ input[type="date"].input::-webkit-calendar-picker-indicator{cursor:pointer;opaci
     <div class="service" onclick="pickService('صيانة الثلاجات')"><div class="sicon">🧊</div><b>صيانة الثلاجات</b><button class="mini-btn">اطلب الآن</button></div>
     <div class="service" onclick="pickService('سباكة وكشف تسربات')"><div class="sicon">🚰</div><b>سباكة وكشف تسربات</b><button class="mini-btn">اطلب الآن</button></div>
     <div class="service" onclick="pickService('كهرباء وتمديدات')"><div class="sicon">🔌</div><b>كهرباء وتمديدات</b><button class="mini-btn">اطلب الآن</button></div>
+    <div class="service" onclick="pickService('صيانة الأفران')"><div class="sicon">🔥</div><b>صيانة الأفران</b><button class="mini-btn">اطلب الآن</button></div>
+    <div class="service" onclick="pickService('صيانة غسالات الأواني')"><div class="sicon">🍽️</div><b>صيانة غسالات الأواني</b><button class="mini-btn">اطلب الآن</button></div>
+    <div class="service" onclick="pickService('صيانة المجففات')"><div class="sicon">♨️</div><b>صيانة المجففات</b><button class="mini-btn">اطلب الآن</button></div>
   </section>
   <section class="track-band" id="track"><div class="map">🗺️</div><div class="track-title"><h2>تتبع طلبك بسهولة</h2><p>أدخل رقم الطلب ورقم الجوال لمتابعة حالة طلبك</p></div><div class="track-fields"><div class="input-wrap"><span class="ico">📞</span><input id="trackPhone" class="input" type="tel" inputmode="tel" dir="ltr" autocomplete="tel" placeholder="05XXXXXXXX"></div><div class="input-wrap"><span class="ico">▣</span><input id="trackId" class="input" placeholder="مثال: 1001"></div></div><button class="btn btn-primary wide-btn" onclick="trackOrder()">تتبع الطلب 🔍</button></section>
   <section class="result" id="resultBox"></section>
@@ -284,7 +290,7 @@ input[type="date"].input::-webkit-calendar-picker-indicator{cursor:pointer;opaci
   <div class="fp-footer-bottom"><span>© 2026 منصة الأسطول الفني. جميع الحقوق محفوظة.</span><span>خدمات صيانة منزلية بثقة واهتمام</span></div>
  </div>
 </footer>
-<div class="modal" id="requestModal"><div class="modal-card"><div class="modal-head"><h2>بيانات الطلب</h2><button class="close" onclick="requestModal.classList.remove('open')">×</button></div><div class="form-grid"><input id="clientName" class="input" placeholder="اسم العميل"><input id="clientPhone" class="input" placeholder="رقم الجوال"><input id="address" class="input" placeholder="العنوان بالتفصيل"><div class="input-wrap"><span class="ico">🗺️</span><input class="input" id="googleMapsLocation" type="url" placeholder="رابط اللوكيشن من Google Maps اختياري"></div><div class="input-wrap"><span class="ico">📅</span><input id="preferredDate" class="input" type="date" required readonly inputmode="none" onclick="openNativeCalendar(this)" onfocus="openNativeCalendar(this)" onkeydown="return false" onchange="validateFutureDate(this)"></div><textarea id="notes" placeholder="وصف المشكلة أو ملاحظات إضافية"></textarea><div class="note">سيتم حفظ الطلب في قاعدة البيانات وظهوره مباشرة في لوحة الأدمن، مع نسخة احتياطية محلية على نفس الجهاز.</div><button id="submitOrderBtn" class="btn btn-primary wide-btn" onclick="createOrder()">تأكيد إنشاء الطلب</button></div></div></div>
+<div class="modal" id="requestModal"><div class="modal-card"><div class="modal-head"><h2>بيانات الطلب</h2><button class="close" onclick="requestModal.classList.remove('open')">×</button></div><div class="form-grid"><input id="clientName" class="input" placeholder="اسم العميل"><input id="clientPhone" class="input" placeholder="رقم الجوال"><input id="address" class="input" placeholder="العنوان بالتفصيل"><div class="input-wrap"><span class="ico">🗺️</span><input class="input" id="googleMapsLocation" type="url" placeholder="رابط اللوكيشن من Google Maps اختياري"></div><div class="input-wrap"><span class="ico">📅</span><input id="preferredDate" class="input" type="date" required readonly inputmode="none" onclick="openNativeCalendar(this)" onfocus="openNativeCalendar(this)" onkeydown="return false" onchange="validateFutureDate(this)"></div><div style="display:grid;gap:7px"><label for="warrantyStatus" style="font-weight:900;color:#0b1f3a">حالة الضمان (اختياري)</label><select id="warrantyStatus" class="select" style="padding-right:14px"><option value="">اختر حالة الضمان</option><option value="داخل الضمان">داخل الضمان</option><option value="خارج الضمان">خارج الضمان</option></select></div><textarea id="notes" placeholder="وصف المشكلة أو ملاحظات إضافية"></textarea><div class="note">سيتم حفظ الطلب في قاعدة البيانات وظهوره مباشرة في لوحة الأدمن، مع نسخة احتياطية محلية على نفس الجهاز.</div><button id="submitOrderBtn" class="btn btn-primary wide-btn" onclick="createOrder()">تأكيد إنشاء الطلب</button></div></div></div>
 <div class="toast" id="toast"></div>
 <script>
 const KEY='technical_fleet_orders_v2';
@@ -367,7 +373,7 @@ async function createOrder(){
   const chosenDate=$('preferredDate').value||$('date').value||today();
   if(chosenDate<today()){toastMsg('لا يمكن إنشاء طلب بتاريخ سابق','error');return}
   const serviceText=selectedServices.join('، ');
-  const order={id:nextId(),service:serviceText,services:selectedServices,date:chosenDate,time:'',city:$('city').value,name,phone,address:$('address').value.trim(),googleMapsLocation:$('googleMapsLocation').value.trim(),notes:$('notes').value.trim(),status:'جديدة',price:0,paymentStatus:'غير مدفوعة',created:new Date().toLocaleString('ar-SA'),createdAt:new Date().toISOString()};
+  const order={id:nextId(),service:serviceText,services:selectedServices,date:chosenDate,time:'',city:$('city').value,name,phone,address:$('address').value.trim(),googleMapsLocation:$('googleMapsLocation').value.trim(),warrantyStatus:$('warrantyStatus').value,notes:[$('warrantyStatus').value?'حالة الضمان: '+$('warrantyStatus').value:'',$('notes').value.trim()].filter(Boolean).join('\n'),status:'جديدة',price:0,paymentStatus:'غير مدفوعة',created:new Date().toLocaleString('ar-SA'),createdAt:new Date().toISOString()};
   const btn=$('submitOrderBtn');
   const old=btn.textContent;
   btn.disabled=true;
@@ -393,6 +399,7 @@ async function createOrder(){
     $('resultBox').scrollIntoView({behavior:'smooth'});
     ['clientName','clientPhone','address','googleMapsLocation','notes'].forEach(id=>$(id).value='');
     $('city').selectedIndex=0;
+    $('warrantyStatus').value='';
     clearSelectedServices();
   }catch(e){
     console.error(e);
