@@ -1548,7 +1548,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 <div class="fp-footer-bottom"><span>© 2026 منصة الاسطول الفني. جميع الحقوق محفوظة.</span><span>خدمات صيانة منزلية بثقة واهتمام</span></div>
 </div>
 </footer>
-<div class="modal" id="requestModal"><div class="modal-card"><div class="modal-head"><h2>بيانات الطلب</h2><button class="close" onclick="requestModal.classList.remove('open')">×</button></div><div class="fleet-progress fleet-modal-progress"><span>١ <small>الخدمة</small></span><i></i><span class="current">٢ <small>البيانات</small></span><i></i><span>٣ <small>التأكيد</small></span></div><div class="form-grid"><input class="input" id="clientName" placeholder="اسم العميل"/><input class="input" id="clientPhone" placeholder="رقم الجوال"/><input class="input" id="address" placeholder="العنوان بالتفصيل"/><div class="input-wrap"><span class="ico">🗺️</span><input class="input" id="googleMapsLocation" placeholder="رابط اللوكيشن من Google Maps اختياري" type="url"/></div><div class="input-wrap"><span class="ico">📅</span><input class="input" id="preferredDate" inputmode="none" onchange="validateFutureDate(this)" onclick="openNativeCalendar(this)" onfocus="openNativeCalendar(this)" onkeydown="return false" readonly="" required="" type="date"/></div><div style="display:grid;gap:7px"><label for="warrantyStatus" style="font-weight:900;color:#0b1f3a">حالة الضمان (اختياري)</label><select class="select" id="warrantyStatus" style="padding-right:14px"><option value="">اختر حالة الضمان</option><option value="داخل الضمان">داخل الضمان</option><option value="خارج الضمان">خارج الضمان</option></select></div><textarea id="notes" placeholder="وصف المشكلة أو ملاحظات إضافية"></textarea><div class="note">سيتم حفظ الطلب في قاعدة البيانات وظهوره مباشرة في لوحة الأدمن، مع نسخة احتياطية محلية على نفس الجهاز.</div><button class="btn btn-primary wide-btn" id="submitOrderBtn" onclick="fleetReviewOrder()">مراجعة الطلب ←</button></div><div hidden="" id="fleetReview"><h3>مراجعة تفاصيل طلبك</h3><div class="fleet-review-details" id="fleetReviewDetails"></div><p class="fleet-privacy">لن يتم تأكيد الطلب إلا بعد الضغط على إرسال الطلب.</p><div class="fleet-review-actions"><button onclick="fleetBackToDetails()" type="button">تعديل البيانات</button><button id="fleetFinalSubmit" onclick="fleetFinalCreate()" type="button">تأكيد وإرسال الطلب</button></div></div></div></div>
+<div class="modal" id="requestModal"><div class="modal-card"><div class="modal-head"><h2>بيانات الطلب</h2><button class="close" onclick="requestModal.classList.remove('open')">×</button></div><div class="fleet-progress fleet-modal-progress"><span>١ <small>الخدمة</small></span><i></i><span class="current">٢ <small>البيانات</small></span><i></i><span>٣ <small>التأكيد</small></span></div><div class="form-grid"><input class="input" id="clientName" autocomplete="name" placeholder="اسم العميل"/><input class="input" id="clientPhone" inputmode="tel" autocomplete="tel" placeholder="رقم الجوال (05xxxxxxxx)"/><input class="input" id="address" placeholder="العنوان بالتفصيل (اختياري)"/><div class="input-wrap"><span class="ico">🗺️</span><input class="input" id="googleMapsLocation" placeholder="رابط اللوكيشن من Google Maps اختياري" type="url"/></div><div class="input-wrap"><span class="ico">📅</span><input class="input" id="preferredDate" inputmode="none" onchange="validateFutureDate(this)" onclick="openNativeCalendar(this)" onfocus="openNativeCalendar(this)" onkeydown="return false" readonly="" required="" type="date"/></div><div style="display:grid;gap:7px"><label for="warrantyStatus" style="font-weight:900;color:#0b1f3a">حالة الضمان (اختياري)</label><select class="select" id="warrantyStatus" style="padding-right:14px"><option value="">اختر حالة الضمان</option><option value="داخل الضمان">داخل الضمان</option><option value="خارج الضمان">خارج الضمان</option></select></div><textarea id="notes" placeholder="وصف المشكلة أو ملاحظات إضافية"></textarea><div class="note">سيتم حفظ الطلب في قاعدة البيانات وظهوره مباشرة في لوحة الأدمن، مع نسخة احتياطية محلية على نفس الجهاز.</div><button class="btn btn-primary wide-btn" id="submitOrderBtn" onclick="fleetReviewOrder()">مراجعة الطلب ←</button></div><div hidden="" id="fleetReview"><h3>مراجعة تفاصيل طلبك</h3><div class="fleet-review-details" id="fleetReviewDetails"></div><p class="fleet-privacy">لن يتم تأكيد الطلب إلا بعد الضغط على إرسال الطلب.</p><div class="fleet-review-actions"><button onclick="fleetBackToDetails()" type="button">تعديل البيانات</button><button id="fleetFinalSubmit" onclick="fleetFinalCreate()" type="button">تأكيد وإرسال الطلب</button></div></div></div></div>
 <div class="toast" id="toast"></div>
 <script>
 const KEY='technical_fleet_orders_v2';
@@ -1611,7 +1611,7 @@ function setupDatePicker(id){
 }
 
 function openRequestModal(){if(!getSelectedServices().length){toastMsg('اختر خدمة واحدة على الأقل','error');return}validateFutureDate($('date'));validateFutureDate($('preferredDate'));if(!$('date').value)$('date').value=today();if(!$('preferredDate').value)$('preferredDate').value=$('date').value;validateFutureDate($('preferredDate'));$('requestModal').classList.add('open')}
-function phoneOk(v){const p=normalizePhone(v);return /^05\d{8}$/.test(p)||/^9665\d{8}$/.test(p)}
+function phoneOk(v){const p=String(v||'').replace(/[٠-٩]/g,c=>String(c.charCodeAt(0)-1632)).replace(/[۰-۹]/g,c=>String(c.charCodeAt(0)-1776)).replace(/\D/g,'');return /^(?:05\d{8}|5\d{8}|9665\d{8}|009665\d{8})$/.test(p)}
 function normalizeOrderForDb(order){const id=cleanId(order.id);return {id,name:order.name||'',phone:order.phone||'',service:order.service||'',city:order.city||'',address:order.address||'',notes:order.notes||'',price:Number(order.price||0),status:order.status||'جديدة',date:order.date||today(),time:order.time||'',tech_id:order.techId||order.tech_id||null,payment_status:order.paymentStatus||order.payment_status||'غير مدفوعة',rating:order.rating||null,rating_note:order.ratingNote||order.rating_note||null,before_photos:order.beforePhotos||order.before_photos||[],after_photos:order.afterPhotos||order.after_photos||[],raw:{...order,google_maps_location:order.googleMapsLocation||''},updated_at:new Date().toISOString()}}
 function normalizeOrderForCustomerSchema(order){return {id:cleanId(order.id),customer_name:order.name||'',customer_phone:order.phone||'',service_type:order.service||'',city:order.city||'',address:order.address||'',notes:[order.notes,order.googleMapsLocation?'Google Maps: '+order.googleMapsLocation:''].filter(Boolean).join('\n'),order_status:order.status||'جديدة',date:order.date||today(),raw:order,updated_at:new Date().toISOString()}}
 function dbOrderToLocal(r){const raw=r.raw||{};return {...raw,id:r.id||raw.id,name:r.name||r.customer_name||raw.name||'',phone:r.phone||r.customer_phone||raw.phone||'',service:r.service||r.service_type||raw.service||'',city:r.city||raw.city||'',address:r.address||raw.address||'',notes:r.notes||raw.notes||'',price:Number(r.price||raw.price||0),status:r.status||r.order_status||raw.status||'جديدة',date:r.date||raw.date||'',time:r.time||raw.time||'',techId:r.tech_id||raw.techId||null,paymentStatus:r.payment_status||raw.paymentStatus||'غير مدفوعة',rating:r.rating||raw.rating||null,ratingNote:r.rating_note||raw.ratingNote||null,beforePhotos:r.before_photos||raw.beforePhotos||[],afterPhotos:r.after_photos||raw.afterPhotos||[]}}
@@ -1620,7 +1620,8 @@ async function pullOrdersFromSupabase(){if(!sb)return load();try{const {data,err
 async function createOrder(){
   const name=$('clientName').value.trim();
   const phoneRaw=$('clientPhone').value.trim();
-  const phone=normalizePhone(phoneRaw).replace(/^966/,'0');
+  const phoneDigits=String(phoneRaw||'').replace(/[٠-٩]/g,c=>String(c.charCodeAt(0)-1632)).replace(/[۰-۹]/g,c=>String(c.charCodeAt(0)-1776)).replace(/\D/g,'');
+  const phone=phoneDigits.replace(/^(?:00966|966)/,'0').replace(/^5(?=\d{8}$)/,'05');
   const selectedServices=getSelectedServices();
   if(!selectedServices.length){toastMsg('اختر خدمة واحدة على الأقل','error');return}
   if(!name){toastMsg('اكتب اسم العميل','error');return}
@@ -1714,28 +1715,7 @@ function toggleFleetTheme(){
  const dark=document.body.classList.toggle('fleet-dark');
  localStorage.setItem('fleet_theme_v2',dark?'dark':'light');
 }
-function fleetReviewOrder(){
- const fields=[['الاسم','clientName'],['الجوال','clientPhone'],['العنوان','address'],['التاريخ','preferredDate']];
- const vals=fields.map(([k,id])=>[k,(document.getElementById(id)?.value||'').trim()]);
- const phone=vals[1][1];
- if(!vals[0][1]||!phoneOk(phone)||!vals[2][1]||!vals[3][1]||!document.getElementById('city').value){
-  toastMsg('أكمل الاسم ورقم الجوال الصحيح والعنوان والتاريخ','error');return;
- }
- if(!getSelectedServices().length){toastMsg('اختر خدمة واحدة على الأقل','error');return}
- validateFutureDate(document.getElementById('preferredDate'));
- const more=[['المدينة',document.getElementById('city')?.value||''],['الخدمات',getSelectedServices().join('، ')],['ملاحظات',document.getElementById('notes')?.value||'لا يوجد']];
- const rows=[...vals,...more];
- const dest=document.getElementById('fleetReviewDetails');
- dest.replaceChildren();
- rows.forEach(([k,v])=>{
-  const row=document.createElement('div'),key=document.createElement('strong'),value=document.createElement('span');
-  key.textContent=k;value.textContent=v;row.append(key,value);dest.append(row);
- });
- document.querySelector('#requestModal .form-grid').hidden=true;
- document.getElementById('fleetReview').hidden=false;
- document.querySelector('#requestModal .modal-head h2').textContent='تأكيد الطلب';
- document.querySelectorAll('.fleet-modal-progress span').forEach((x,i)=>x.classList.toggle('current',i===2));
-}
+
 function fleetBackToDetails(){
  document.querySelector('#requestModal .form-grid').hidden=false;
  document.getElementById('fleetReview').hidden=true;
@@ -1777,21 +1757,33 @@ function goAppTab(tab){
  window.scrollTo({top:0,behavior:'smooth'});
 }
 function fleetReviewOrder(){
- const name=document.getElementById('clientName').value.trim(),
- phone=document.getElementById('clientPhone').value.trim(),
- address=document.getElementById('address').value.trim(),
- city=document.getElementById('city').value,
- date=document.getElementById('preferredDate').value||document.getElementById('date').value;
- if(!getSelectedServices().length){toastMsg('اختر خدمة واحدة على الأقل','error');return}
- if(!name||!phoneOk(phone)||!city||!address){toastMsg('أكمل الاسم والجوال الصحيح والمدينة والعنوان','error');return}
- if(!date||date<today()){toastMsg('اختر تاريخًا صحيحًا للحجز','error');return}
- const rows=[['الاسم',name],['الجوال',phone],['المدينة',city],['العنوان',address],['الموعد',date],['الخدمات',getSelectedServices().join('، ')],['ملاحظات',document.getElementById('notes').value.trim()||'لا يوجد']];
- const box=document.getElementById('fleetReviewDetails');box.replaceChildren();
+ const field=id=>document.getElementById(id);
+ const name=field('clientName').value.trim();
+ const phone=field('clientPhone').value.trim();
+ const city=field('city').value.trim();
+ const address=field('address').value.trim();
+ const date=field('preferredDate').value||field('date').value;
+ const fail=(id,message)=>{
+   toastMsg(message,'error');
+   const el=field(id);
+   if(el){el.style.borderColor='#dc2626';el.scrollIntoView({behavior:'smooth',block:'center'});if(!el.readOnly)el.focus({preventScroll:true});}
+ };
+ ['clientName','clientPhone','city','address','preferredDate'].forEach(id=>{
+   const el=field(id);if(el)el.style.borderColor='';
+ });
+ if(!getSelectedServices().length){toastMsg('اختر خدمة واحدة على الأقل','error');return;}
+ if(!name){fail('clientName','اكتب اسم العميل لإكمال الحجز');return;}
+ if(!phoneOk(phone)){fail('clientPhone','راجع رقم الجوال: اكتب رقم سعودي مثل 05xxxxxxxx');return;}
+ if(!city){fail('city','اختر المدينة من القائمة لإكمال الحجز');return;}
+ if(!date||date<today()){fail('preferredDate','اختر تاريخًا صحيحًا للحجز');return;}
+ const rows=[['الاسم',name],['الجوال',phone],['المدينة',city],['العنوان',address||'لم يحدد'],['الموعد',date],['الخدمات',getSelectedServices().join('، ')],['ملاحظات',field('notes').value.trim()||'لا يوجد']];
+ const box=field('fleetReviewDetails');box.replaceChildren();
  rows.forEach(([key,val])=>{const row=document.createElement('div'),k=document.createElement('strong'),v=document.createElement('span');k.textContent=key;v.textContent=val;row.append(k,v);box.append(row)});
  document.querySelector('#requestModal .form-grid').hidden=true;
- document.getElementById('fleetReview').hidden=false;
+ field('fleetReview').hidden=false;
  document.querySelector('#requestModal .modal-head h2').textContent='مراجعة وتأكيد الطلب';
  document.querySelectorAll('.fleet-modal-progress span').forEach((el,i)=>el.classList.toggle('current',i===2));
+ field('fleetReview').scrollIntoView({behavior:'smooth',block:'start'});
 }
 function fleetBackToDetails(){
  document.querySelector('#requestModal .form-grid').hidden=false;
